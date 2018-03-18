@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput } from 'react-native';
 
 class Blink extends React.Component {
   constructor(props) {
@@ -17,7 +17,29 @@ class Blink extends React.Component {
   render() {
     let display = this.state.isShowingText ? this.props.text : ' ';
     return (
-      <Text>{display}</Text>
+      <Text style={styles.text}>{display}</Text>
+    );
+  }
+}
+
+class Input extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {text: 'sweetie'};
+    this.userHasGivenText = this.userHasGivenText.bind(this);
+
+  }
+
+  userHasGivenText(t){
+    this.setState ({text: t});
+  }
+
+  render() {
+    return (
+      <View>    //with more than one request, View is needed
+        <TextInput onChangeText={this.userHasGivenText}/>
+        <Text>{this.state.text}</Text>
+      </View>
     );
   }
 }
@@ -32,6 +54,7 @@ export default class App extends React.Component {
     };
     return (
       <View style={styles.container}>
+        <Input/>    //default use wihtout props
         <Blink text='Picture 1' />
         <Image source ={pic} style={{width: 193, height: 110}}/>
         <Blink text='Picture 2' />
@@ -44,8 +67,12 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#ff7f50',
     justifyContent: 'center',
     alignItems: 'center',
   },
+
+  text: {
+    color: '#f0ffff',
+  }
 });
